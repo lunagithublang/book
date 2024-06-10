@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    username: mdarena
+    password:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/book
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: localhost
+    port: 1025
+    username: md
+    password: password
+    auth: true
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
+application:
+  mailing:
+    frontend:
+      activation-url: https://localhost:4200/active-account
+  security:
+    jwt:
+      secret-key: 62475e6540345f6d714a7e513d4047744051534277793d6259326e792a
+      #      expiration: 86400000 # Day
+      expiration: 60000 # 1 Min
+      refresh-token:
+        expiration: 604800000 # 7 Days

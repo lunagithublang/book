@@ -1,0 +1,31 @@
+services:
+  postgres:
+    container_name: pg_sql_book
+    image: 'postgres:latest'
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: md
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: book
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - book-net
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: mail_dev_book
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+
+networks:
+  book-net:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
