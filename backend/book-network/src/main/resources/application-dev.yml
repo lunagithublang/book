@@ -33,7 +33,7 @@ spring:
 application:
   mailing:
     frontend:
-      activation-url: https://localhost:4200/active-account
+      activation-url: http://localhost:4200/activate-account
   security:
     jwt:
       secret-key: 62475e6540345f6d714a7e513d4047744051534277793d6259326e792a
