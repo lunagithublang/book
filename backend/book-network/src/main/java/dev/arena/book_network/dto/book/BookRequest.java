@@ -1,18 +1,26 @@
 package dev.arena.book_network.dto.book;
 
-import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
-import java.util.UUID;
 
 public record BookRequest(
-    String title,
-    String authorName,
-    String isbn,
-    String synopsis,
-    String bookCover,
-    boolean isArchived,
-    boolean isShareable,
-    UUID createdBy,
-    UUID updatedBy
+        @NotBlank
+        @NotEmpty
+        String title,
+        @NotBlank
+        @NotEmpty
+        String authorName,
+        @NotBlank
+        @NotEmpty
+        String isbn,
+        @NotBlank
+        @NotEmpty
+        String synopsis,
+        @NotBlank
+        @NotEmpty
+        String bookCover,
+
+        boolean isShareable
 ) {
 }
