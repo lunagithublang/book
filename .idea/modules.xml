@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/book-network.iml" filepath="$PROJECT_DIR$/book-network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/book.iml" filepath="$PROJECT_DIR$/.idea/book.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend/book-network/book-network.iml" filepath="$PROJECT_DIR$/backend/book-network/book-network.iml" />
     </modules>
   </component>
 </project>
