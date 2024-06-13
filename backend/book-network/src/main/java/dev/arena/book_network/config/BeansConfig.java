@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 import java.util.Arrays;
@@ -55,5 +56,10 @@ public class BeansConfig {
     @Bean
     public BookMapper bookMapper() {
         return BookMapper.INSTANCE;
+    }
+
+    @Bean
+    public UriComponentsBuilder uriComponentsBuilder() {
+        return UriComponentsBuilder.newInstance();
     }
 }
