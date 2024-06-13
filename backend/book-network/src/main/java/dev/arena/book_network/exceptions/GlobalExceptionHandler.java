@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import static java.util.Map.entry;
 
+import java.io.IOException;
 import java.util.Map;
 
 @ControllerAdvice
@@ -30,7 +31,8 @@ public class GlobalExceptionHandler {
             entry(DisabledException.class, HttpStatus.UNAUTHORIZED),
             entry(LockedException.class, HttpStatus.UNAUTHORIZED),
             entry(BadCredentialsException.class, HttpStatus.UNAUTHORIZED),
-            entry(OperationNotPermittedException.class, HttpStatus.UNAUTHORIZED)
+            entry(OperationNotPermittedException.class, HttpStatus.UNAUTHORIZED),
+            entry(IOException.class, HttpStatus.INTERNAL_SERVER_ERROR)
     );
 
     @ExceptionHandler({
@@ -44,7 +46,8 @@ public class GlobalExceptionHandler {
             DisabledException.class,
             LockedException.class,
             BadCredentialsException.class,
-            OperationNotPermittedException.class
+            OperationNotPermittedException.class,
+            IOException.class
     })
     public ResponseEntity<ErrorResponse> handleExceptions(Exception exception, HttpServletRequest request) {
         return ErrorResponseBuilder.build(EXCEPTION_STATUS_MAP, exception, request);

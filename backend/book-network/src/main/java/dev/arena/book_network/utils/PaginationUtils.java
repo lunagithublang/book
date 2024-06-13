@@ -39,9 +39,6 @@ public class PaginationUtils {
     public static <T, U> PageResponse<U> createPageResponse(Page<T> page, Function<T, U> mapper, UriComponentsBuilder uriComponentsBuilder) {
 
         List<U> dtoList = page.stream().map(mapper).toList();
-        System.out.println("page.nextOrLastPageable() " + page.nextOrLastPageable());
-        System.out.println("page.previousOrFirstPageable() " + page.previousOrFirstPageable());
-
         String nextPageUrl = getNextPageUrl(page, uriComponentsBuilder);
         String previousUrl = getPreviousPageUrl(page, uriComponentsBuilder);
 

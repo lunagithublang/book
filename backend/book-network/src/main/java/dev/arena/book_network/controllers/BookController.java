@@ -6,6 +6,7 @@ import dev.arena.book_network.dto.book.BookRequest;
 import dev.arena.book_network.dto.book.BookResponse;
 import dev.arena.book_network.dto.book.history.BookTransactionHistoryResponse;
 import dev.arena.book_network.services.book.BookService;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -135,5 +138,16 @@ public class BookController {
             Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.updateArchiveStatusById(resourceId, connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{resourceId}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCover(
+            @PathVariable("resourceId") UUID resourceId,
+            @Parameter()
+            @RequestPart("file") MultipartFile file,
+            Authentication connectedUser
+    ) throws IOException {
+        bookService.uploadBookCover(resourceId, file, connectedUser);
+        return ResponseEntity.accepted().build();
     }
 }

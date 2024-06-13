@@ -5,8 +5,10 @@ import dev.arena.book_network.dto.book.BookRequest;
 import dev.arena.book_network.dto.book.BookResponse;
 import dev.arena.book_network.dto.book.history.BookTransactionHistoryResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public interface BookService {
@@ -17,6 +19,7 @@ public interface BookService {
     BookTransactionHistoryResponse borrowBook(UUID resourceId, Authentication connectedUser);
     BookTransactionHistoryResponse returnBorrowedBook(UUID resourceId, Authentication connectedUser);
     BookTransactionHistoryResponse approveReturnBorrowedBook(UUID resourceId, Authentication connectedUser);
+    void uploadBookCover(UUID resourceId, MultipartFile file, Authentication connectedUser) throws IOException;
 
     PageResponse<BookResponse> findAllDisplayableBooks(
             int pageNumber,

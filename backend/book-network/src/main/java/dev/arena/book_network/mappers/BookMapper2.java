@@ -5,6 +5,7 @@ import dev.arena.book_network.dto.book.BookRequest;
 import dev.arena.book_network.dto.book.BookResponse;
 import dev.arena.book_network.entities.Book;
 import org.springframework.stereotype.Service;
+import dev.arena.book_network.utils.FileUtils;
 
 @Service
 public class BookMapper2 {
@@ -38,6 +39,7 @@ public class BookMapper2 {
                 .updatedAt(book.getUpdatedAt())
                 .owner(book.getOwner().getFullName())
                 .rate(book.getRate())
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 

@@ -14,6 +14,7 @@ import dev.arena.book_network.mappers.BookHistoryTransactionMapper;
 import dev.arena.book_network.mappers.BookMapper2;
 import dev.arena.book_network.repositories.BookRepository;
 import dev.arena.book_network.repositories.BookTransactionHistoryRepository;
+import dev.arena.book_network.services.file.FileService;
 import dev.arena.book_network.utils.PageableUtils;
 import dev.arena.book_network.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -37,6 +40,7 @@ public class BookServiceImplementation implements BookService {
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
     private final BookHistoryTransactionMapper bookHistoryTransactionMapper;
     private final BookMapper2 bookMapper2;
+    private final FileService fileService;
 
     @Override
     @Transactional
@@ -175,6 +179,25 @@ public class BookServiceImplementation implements BookService {
         bookTransactionHistoryRepository.save(bookTransactionHistory);
 
         return bookHistoryTransactionMapper.toResponse(bookTransactionHistory);
+    }
+
+    @Override
+    public void uploadBookCover(UUID resourceId, MultipartFile file, Authentication connectedUser) throws IOException {
+        Book book = bookRepository
+                .findById(resourceId)
+                .orElseThrow(() -> new NotFoundEntityException("Book not found!"));
+
+        if (book.isArchived() || !book.isShareable()) {
+            throw new OperationNotPermittedException("This book cannot be borrowed since it is archived or not shareable");
+        }
+
+        Account account = (Account) connectedUser.getPrincipal();
+        UUID accountId = account.getId();
+
+        String bookCover = fileService.saveFile(accountId, file);
+        System.out.println("bookCover " + bookCover);
+        book.setBookCover(bookCover);
+        bookRepository.save(book);
     }
 
     @Override
