@@ -23,7 +23,6 @@ public class BookMapper2 {
     }
 
     public BookResponse toResponse(Book book) {
-
         return BookResponse.builder()
                 .id(book.getId())
                 .authorName(book.getAuthorName())

@@ -195,7 +195,6 @@ public class BookServiceImplementation implements BookService {
         UUID accountId = account.getId();
 
         String bookCover = fileService.saveFile(accountId, file);
-        System.out.println("bookCover " + bookCover);
         book.setBookCover(bookCover);
         bookRepository.save(book);
     }
