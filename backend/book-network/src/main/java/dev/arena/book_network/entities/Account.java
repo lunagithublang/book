@@ -41,6 +41,14 @@ public class Account extends BaseEntity implements UserDetails, Principal {
     @OneToMany(mappedBy = "account")
     private List<Token> tokens;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "account")
+    private List<BookTransactionHistory> histories;
+
     public String getFullName() {
         return firstName + " " + lastName;
     }

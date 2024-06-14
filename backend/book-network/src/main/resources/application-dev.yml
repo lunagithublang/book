@@ -31,13 +31,15 @@ spring:
         writetimeout: 5000
 
 application:
+  file:
+    upload: ./uploads
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account
   security:
     jwt:
       secret-key: 62475e6540345f6d714a7e513d4047744051534277793d6259326e792a
-      #      expiration: 86400000 # Day
-      expiration: 60000 # 1 Min
+      expiration: 86400000 # Day
+#      expiration: 60000 # 1 Min
       refresh-token:
         expiration: 604800000 # 7 Days
