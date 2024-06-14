@@ -28,7 +28,7 @@ public class FeedBackController {
     private final FeedBackService feedBackService;
 
     @PostMapping("")
-    public ResponseEntity<FeedBackResponse> create(
+    public ResponseEntity<FeedBackResponse> createFeedBack(
             @Valid @RequestBody FeedBackRequest feedBackRequest,
             Authentication connectedUser
     ) {

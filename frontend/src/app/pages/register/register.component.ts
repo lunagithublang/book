@@ -25,13 +25,13 @@ export class RegisterComponent {
 
   register () {
     this.errorMessage = [];
-    this.accountService.create({
+    this.accountService.createAccount({
       body: this.accountRequest
     }).subscribe({
       next: () => {
         this.router.navigate(['activate-account'])
       },
-      error: (err) => {
+      error: (err: any) => {
         if (err.error.errors) {
           for (const [key, value] of Object.entries(err.error.errors)) {
             this.errorMessage.push(`${key}: ${value}`);
