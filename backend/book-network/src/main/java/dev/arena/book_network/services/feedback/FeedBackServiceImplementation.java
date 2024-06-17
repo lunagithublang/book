@@ -36,7 +36,7 @@ public class FeedBackServiceImplementation implements FeedBackService{
     @Override
     @Transactional
     public FeedBackResponse saveFeedBack(FeedBackRequest feedBackRequest, Authentication connectedUser) {
-
+        System.out.println("feedBackRequest.bookId() " + feedBackRequest.bookId());
         Book book = bookRepository
                 .findById(feedBackRequest.bookId())
                 .orElseThrow(() -> new NotFoundEntityException("Book not found!"));
@@ -53,6 +53,7 @@ public class FeedBackServiceImplementation implements FeedBackService{
         }
 
         Feedback feedback = feedBackMapper.toFeedBack(feedBackRequest);
+        feedBackRepository.save(feedback);
 
         return feedBackMapper.toResponse(feedback, accountId);
     }

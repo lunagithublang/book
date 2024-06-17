@@ -17,10 +17,6 @@ public record BookRequest(
         @NotBlank
         @NotEmpty
         String synopsis,
-        @NotBlank
-        @NotEmpty
-        String bookCover,
-
         boolean isShareable
 ) {
 }

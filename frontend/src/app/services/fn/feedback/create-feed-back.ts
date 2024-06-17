@@ -6,15 +6,15 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { AccountRequest } from '../../models/account-request';
-import { AuthenticateResponse } from '../../models/authenticate-response';
+import { FeedBackRequest } from '../../models/feed-back-request';
+import { FeedBackResponse } from '../../models/feed-back-response';
 
-export interface Create$Params {
-      body: AccountRequest
+export interface CreateFeedBack$Params {
+      body: FeedBackRequest
 }
 
-export function create(http: HttpClient, rootUrl: string, params: Create$Params, context?: HttpContext): Observable<StrictHttpResponse<AuthenticateResponse>> {
-  const rb = new RequestBuilder(rootUrl, create.PATH, 'post');
+export function createFeedBack(http: HttpClient, rootUrl: string, params: CreateFeedBack$Params, context?: HttpContext): Observable<StrictHttpResponse<FeedBackResponse>> {
+  const rb = new RequestBuilder(rootUrl, createFeedBack.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/json');
   }
@@ -24,9 +24,9 @@ export function create(http: HttpClient, rootUrl: string, params: Create$Params,
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<AuthenticateResponse>;
+      return r as StrictHttpResponse<FeedBackResponse>;
     })
   );
 }
 
-create.PATH = '/accounts/register';
+createFeedBack.PATH = '/feedbacks';

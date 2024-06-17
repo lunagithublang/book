@@ -188,7 +188,7 @@ public class BookServiceImplementation implements BookService {
                 .orElseThrow(() -> new NotFoundEntityException("Book not found!"));
 
         if (book.isArchived() || !book.isShareable()) {
-            throw new OperationNotPermittedException("This book cannot be borrowed since it is archived or not shareable");
+            throw new OperationNotPermittedException("This book cannot upload book cover since it is archive or not shareable");
         }
 
         Account account = (Account) connectedUser.getPrincipal();
