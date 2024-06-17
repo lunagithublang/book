@@ -16,13 +16,13 @@ public class BookMapper2 {
                 .authorName(bookRequest.authorName())
                 .isbn(bookRequest.isbn())
                 .synopsis(bookRequest.synopsis())
-                .bookCover(bookRequest.bookCover())
                 .isShareable(bookRequest.isShareable())
                 .isArchived(false)
                 .build();
     }
 
     public BookResponse toResponse(Book book) {
+        System.out.println("book.getBookCover() " + book.getBookCover());
         return BookResponse.builder()
                 .id(book.getId())
                 .authorName(book.getAuthorName())

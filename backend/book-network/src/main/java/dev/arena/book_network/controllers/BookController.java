@@ -29,7 +29,7 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping("")
-    public ResponseEntity<BookResponse> create(
+    public ResponseEntity<BookResponse> createBook(
             @Valid @RequestBody BookRequest bookRequest,
             Authentication connectedUser
     ) {

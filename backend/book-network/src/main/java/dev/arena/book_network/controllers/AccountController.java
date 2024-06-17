@@ -23,7 +23,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticateResponse> create(@Valid @RequestBody AccountRequest accountRequest) throws MessagingException {
+    public ResponseEntity<AuthenticateResponse> createAccount(@Valid @RequestBody AccountRequest accountRequest) throws MessagingException {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.saveAccount(accountRequest));
     }

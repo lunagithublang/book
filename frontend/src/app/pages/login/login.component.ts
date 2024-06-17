@@ -28,10 +28,11 @@ export class LoginComponent {
     }).subscribe({
       next:(res) => {
         // Save the token
-        this.tokenService.setAccessToken = res.accessToken as string;
+        this.tokenService.token = res.accessToken as string;
         this.router.navigate(['books']);
       },
       error:(err) => {
+        this.errorMessage = [];
         if (err.error.errors) {
           for (const [key, value] of Object.entries(err.error.errors)) {
             this.errorMessage.push(`${key}: ${value}`);

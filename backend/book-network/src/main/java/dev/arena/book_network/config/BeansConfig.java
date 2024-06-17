@@ -1,6 +1,5 @@
 package dev.arena.book_network.config;
 
-import dev.arena.book_network.mappers.BookMapper;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -51,11 +50,6 @@ public class BeansConfig {
     @Bean
     public AuditorAware<UUID> auditorAware() {
         return new ApplicationAuditAware();
-    }
-
-    @Bean
-    public BookMapper bookMapper() {
-        return BookMapper.INSTANCE;
     }
 
     @Bean

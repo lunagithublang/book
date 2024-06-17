@@ -23,7 +23,6 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
             FROM BookTransactionHistory history
             WHERE history.book.owner.id = :ownerId
             AND history.isReturned = true
-            AND history.isReturnedApproved = true
      """)
     Page<BookTransactionHistory> findAllReturnedBooks(UUID ownerId, Pageable pageable);
 
