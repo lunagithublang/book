@@ -12,23 +12,27 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import static java.util.Map.entry;
 
+import java.io.IOException;
 import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final Map<Class<? extends Exception>, HttpStatus> EXCEPTION_STATUS_MAP = Map.of(
-            MethodArgumentNotValidException.class, HttpStatus.UNPROCESSABLE_ENTITY,
-            MethodArgumentTypeMismatchException.class, HttpStatus.NOT_FOUND,
-            IllegalStateException.class, HttpStatus.FORBIDDEN,
-            ArrayIndexOutOfBoundsException.class, HttpStatus.INTERNAL_SERVER_ERROR,
-            NotFoundEntityException.class, HttpStatus.NOT_FOUND,
-            AddressException.class, HttpStatus.INTERNAL_SERVER_ERROR,
-            InvalidTokenException.class, HttpStatus.BAD_REQUEST,
-            DisabledException.class, HttpStatus.UNAUTHORIZED,
-            LockedException.class, HttpStatus.UNAUTHORIZED,
-            BadCredentialsException.class, HttpStatus.UNAUTHORIZED
+    private static final Map<Class<? extends Exception>, HttpStatus> EXCEPTION_STATUS_MAP = Map.ofEntries(
+            entry(MethodArgumentNotValidException.class, HttpStatus.UNPROCESSABLE_ENTITY),
+            entry(MethodArgumentTypeMismatchException.class, HttpStatus.NOT_FOUND),
+            entry(IllegalStateException.class, HttpStatus.FORBIDDEN),
+            entry(ArrayIndexOutOfBoundsException.class, HttpStatus.INTERNAL_SERVER_ERROR),
+            entry(NotFoundEntityException.class, HttpStatus.NOT_FOUND),
+            entry(AddressException.class, HttpStatus.INTERNAL_SERVER_ERROR),
+            entry(InvalidTokenException.class, HttpStatus.BAD_REQUEST),
+            entry(DisabledException.class, HttpStatus.UNAUTHORIZED),
+            entry(LockedException.class, HttpStatus.UNAUTHORIZED),
+            entry(BadCredentialsException.class, HttpStatus.UNAUTHORIZED),
+            entry(OperationNotPermittedException.class, HttpStatus.UNAUTHORIZED),
+            entry(IOException.class, HttpStatus.INTERNAL_SERVER_ERROR)
     );
 
     @ExceptionHandler({
@@ -41,7 +45,9 @@ public class GlobalExceptionHandler {
             InvalidTokenException.class,
             DisabledException.class,
             LockedException.class,
-            BadCredentialsException.class
+            BadCredentialsException.class,
+            OperationNotPermittedException.class,
+            IOException.class
     })
     public ResponseEntity<ErrorResponse> handleExceptions(Exception exception, HttpServletRequest request) {
         return ErrorResponseBuilder.build(EXCEPTION_STATUS_MAP, exception, request);
