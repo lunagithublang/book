@@ -705,7 +705,6 @@
       "BookRequest": {
         "required": [
           "authorName",
-          "bookCover",
           "isbn",
           "synopsis",
           "title"
@@ -722,9 +721,6 @@
             "type": "string"
           },
           "synopsis": {
-            "type": "string"
-          },
-          "bookCover": {
             "type": "string"
           },
           "isShareable": {
@@ -807,6 +803,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "bookId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "title": {
             "type": "string"
           },
@@ -816,10 +816,14 @@
           "isbn": {
             "type": "string"
           },
-          "approved": {
-            "type": "boolean"
+          "rate": {
+            "type": "number",
+            "format": "double"
           },
           "returned": {
+            "type": "boolean"
+          },
+          "approved": {
             "type": "boolean"
           }
         }

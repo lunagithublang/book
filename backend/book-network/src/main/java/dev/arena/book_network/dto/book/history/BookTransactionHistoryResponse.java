@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.UUID;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
@@ -15,9 +17,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @MappedSuperclass
 public class BookTransactionHistoryResponse extends BaseResponse  {
+    private UUID bookId;
     private String title;
     private String authorName;
     private String isbn;
+    private double rate;
     private boolean isReturned;
     private boolean isApproved;
 }

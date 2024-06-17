@@ -32,6 +32,7 @@ export class RegisterComponent {
         this.router.navigate(['activate-account'])
       },
       error: (err: any) => {
+        this.errorMessage = [];
         if (err.error.errors) {
           for (const [key, value] of Object.entries(err.error.errors)) {
             this.errorMessage.push(`${key}: ${value}`);

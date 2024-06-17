@@ -1,0 +1,27 @@
+<h3>Books list</h3>
+<div 
+    *ngIf="message" 
+    class="alert" 
+    [class.alert-success]="messageStatus === 'success' "
+    [class.alert-danger]="messageStatus === 'error' "
+>
+    {{message}}
+</div>
+<hr>
+<div class="d-flex justify-content-start gap-2 flex-wrap">
+    <app-book-card 
+        [book]="book" 
+        *ngFor="let book of bookResponse.data" 
+        (borrow)="borrowBook($event)"
+    >
+    </app-book-card>
+</div>
+
+<app-pagination
+    [pageNumber]="bookResponse.pageNumber"
+    [pageSize]="bookResponse.pageSize"
+    [totalPages]="bookResponse.totalPages"
+    [nextPageUrl]="bookResponse.nextPageUrl"
+    [previousUrl]="bookResponse.previousUrl"
+    (pageChange)="onPageChange($event)"
+></app-pagination>
