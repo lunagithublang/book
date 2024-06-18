@@ -3,7 +3,7 @@ name: Book frontend pipeline
 on:
   push:
     branches:
-      - develop
+      - master
     paths:
       - backend/book-network/**
       - docker/frontend/**
