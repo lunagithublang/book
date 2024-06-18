@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: md
       PGDATA: /var/lib/postgresql/data
-      POSTGRES_DB: book
+      POSTGRES_DB: borrow_books
     volumes:
       - postgres:/data/postgres
     ports:
@@ -21,6 +21,26 @@ services:
     ports:
       - 1080:1080
       - 1025:1025
+
+  book-api:
+    container_name: book-backend
+    image: book/backend:1.0.1
+    ports:
+      - 8088:8088
+    networks:
+      - book-net
+    depends_on:
+      - postgres
+
+  book-ui:
+    container_name: book-frontend
+    image: book/frontend:1.0.1
+    ports:
+      - 8080:81
+    networks:
+      - book-net
+    depends_on:
+      - book-api
 
 networks:
   book-net:
