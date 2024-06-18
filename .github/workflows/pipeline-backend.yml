@@ -58,7 +58,7 @@ jobs:
 
         run: |
           cd backend/book-network
-          mvn -B test --file pom.xml -X
+          ./mvnw clean test
 
   build:
     runs-on: ubuntu-latest
