@@ -48,9 +48,10 @@ jobs:
           java-version: 17
 
       - name: Running unit tests
-        run: |
-          cd backend/book-network
-          ./mvnw clean test
+        run: mvn -B test --file pom.xml
+#        run: |
+#          cd backend/book-network
+#          ./mvnw clean test
 
   build:
     runs-on: ubuntu-latest
