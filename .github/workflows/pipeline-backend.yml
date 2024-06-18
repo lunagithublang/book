@@ -55,6 +55,7 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: password
           SPRING_H2_CONSOLE_ENABLED: "true"
           SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
+
         run: |
           cd backend/book-network
           mvn -B test --file pom.xml -X
