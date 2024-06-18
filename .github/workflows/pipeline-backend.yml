@@ -50,7 +50,7 @@ jobs:
       - name: Running unit tests
         run: |
           cd backend/book-network
-          mvn -B test --file pom.xml
+          mvn -B test --file pom.xml -X
 
   build:
     runs-on: ubuntu-latest
