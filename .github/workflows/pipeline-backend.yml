@@ -48,6 +48,13 @@ jobs:
           java-version: 17
 
       - name: Running unit tests
+        env:
+          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+          SPRING_DATASOURCE_DRIVERCLASSNAME: org.h2.Driver
+          SPRING_DATASOURCE_USERNAME: sa
+          SPRING_DATASOURCE_PASSWORD: password
+          SPRING_H2_CONSOLE_ENABLED: "true"
+          SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
         run: |
           cd backend/book-network
           mvn -B test --file pom.xml -X
