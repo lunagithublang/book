@@ -11,6 +11,7 @@ import { ActivateAccountComponent } from './pages/activate-account/activate-acco
 import { CodeInputModule } from 'angular-code-input';
 import { TokenService } from './services/token/token.service';
 import { tokenInterceptor } from './services/interceptor/token.interceptor';
+import { ApiModule } from './services/api.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { tokenInterceptor } from './services/interceptor/token.interceptor';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    CodeInputModule
+    CodeInputModule,
+    ApiModule.forRoot({rootUrl: 'http://localhost:8088/api/v1'})
   ],
   providers: [
     provideClientHydration(),
