@@ -25,7 +25,8 @@ jobs:
         id: extract_version
         run: |
           cd frontend
-          apt-get install jq
+          sudo apt-get update
+          sudo apt-get install jq -y
           echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT 
 
       - name: Login to docker hub
