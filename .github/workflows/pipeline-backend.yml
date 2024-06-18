@@ -76,6 +76,22 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
+      - name: Setup PostgreSQL
+        env:
+          POSTGRE_URL: jdbc:postgresql://localhost:5432/borrow_books
+          POSTGRE_USERNAME: md
+          POSTGRE_PASSWORD: password
+          POSTGRE_DRIVERCLASSNAME: org.postgresql.Driver
+          POSTGRE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql
+          sudo service postgresql start
+          sudo -u postgres psql -c "CREATE USER md WITH PASSWORD 'password';"
+          sudo -u postgres psql -c "ALTER USER md CREATEDB;"
+          sudo -u postgres psql -c "CREATE DATABASE borrow_books;"
+          sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE borrow_books TO md;"
+
       - name: Building backend
         run: |
           cd backend/book-network
