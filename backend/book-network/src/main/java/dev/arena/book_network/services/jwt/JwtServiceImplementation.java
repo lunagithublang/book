@@ -16,7 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Service
+// Commented this out since I added keycloak
+//@Service
 @RequiredArgsConstructor
 public class JwtServiceImplementation implements JwtService{
 

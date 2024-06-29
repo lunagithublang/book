@@ -13,17 +13,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserRoleInitializer implements CommandLineRunner {
 
-    private final RoleRepository roleRepository;
+//    private final RoleRepository roleRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        final String userRoleName = "USER";
-        Optional<Role> existingRole = roleRepository.findByName(userRoleName);
-        if (existingRole.isEmpty()) {
-            Role role = Role.builder()
-                    .name(userRoleName)
-                    .build();
-            roleRepository.save(role);
-        }
+//        final String userRoleName = "USER";
+//        Optional<Role> existingRole = roleRepository.findByName(userRoleName);
+//        if (existingRole.isEmpty()) {
+//            Role role = Role.builder()
+//                    .name(userRoleName)
+//                    .build();
+//            roleRepository.save(role);
+//        }
     }
 }

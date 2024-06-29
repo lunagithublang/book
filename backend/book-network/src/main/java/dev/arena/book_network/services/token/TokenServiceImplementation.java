@@ -13,22 +13,25 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class TokenServiceImplementation implements TokenService{
 
-    private final TokenRepository tokenRepository;
+//    private final TokenRepository tokenRepository;
 
     @Override
     public String generateAndSaveActivationToken(Account account) {
 
-        String generatedToken = generateActivationCode();
+//        String generatedToken = generateActivationCode();
+//
+//        Token token = Token.builder()
+//                .token(generatedToken)
+//                .expiresAt(LocalDateTime.now().plusMinutes(15))
+//                .accountId(account.getId())
+////                .account(account)
+//                .build();
+//
+//        tokenRepository.save(token);
+//
+//        return generatedToken;
 
-        Token token = Token.builder()
-                .token(generatedToken)
-                .expiresAt(LocalDateTime.now().plusMinutes(15))
-                .account(account)
-                .build();
-
-        tokenRepository.save(token);
-
-        return generatedToken;
+        return null;
     }
 
     private String generateActivationCode() {

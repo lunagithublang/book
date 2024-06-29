@@ -27,7 +27,8 @@ public class BookResponse extends BaseResponse {
     private boolean isShareable;
     private UUID createdBy;
     private UUID updatedBy;
-    private String owner;
+//    private String owner;
+    private UUID owner;
     private byte[] cover;
     private double rate;
 }

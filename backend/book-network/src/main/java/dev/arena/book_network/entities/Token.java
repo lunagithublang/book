@@ -12,22 +12,26 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Entity
+//@Entity
 public class Token  extends BaseEntity{
 
     @Column(nullable = false)
     private String token;
 
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+//    @JsonManagedReference
+//    @ManyToOne
+//    @JoinColumn(name = "account_id")
+//    private Account account;
+
+    @Column(name="account_id")
+    private UUID accountId;
 
     private LocalDateTime validatedAt;
     private LocalDateTime expiresAt;
