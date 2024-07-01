@@ -47,6 +47,10 @@ export class KeycloakService {
     }
   }
 
+  settings () {
+    return this.keyCloak?.accountManagement();
+  }
+
   login () {
     return this.keyCloak?.login();
   }

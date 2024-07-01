@@ -44,6 +44,11 @@
                 </button>
                 <span>Welcome</span>
                 <span class="text-capitalize fw-bold">{{ fullName }}</span>
+
+                <button class="btn btn-link" type="button" (click)="settings()">
+                    <i class="fas fa-cog"></i>
+                </button>
+
                 <button class="btn btn-link" type="button" (click)="logout()">
                     <i class="fas fa-door-open"></i>
                 </button>

@@ -41,6 +41,10 @@ export class MenuComponent implements OnInit {
   //   window.location.reload();
   // }
 
+  async settings() {
+    await this.keyCloakService.settings();
+  }
+
   async logout() {
     await this.keyCloakService.logout();
   }
