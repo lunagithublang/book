@@ -1,4 +1,4 @@
-package dev.arena.book_network.components;
+package dev.arena.book_network.security;
 
 import dev.arena.book_network.constants.Constants;
 import dev.arena.book_network.repositories.TokenRepository;
@@ -20,7 +20,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component
+// Commented this out since I added keycloak
+//@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

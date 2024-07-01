@@ -60,6 +60,7 @@ export class BorrowedComponent implements OnInit{
         if (withFeedback) {
           this.giveFeedback()
         }
+        this.feedbackRequest.comment = '';
         this.selectedBook = undefined
         this.findAllBorrowedBooks();
       }

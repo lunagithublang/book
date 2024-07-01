@@ -36,7 +36,7 @@ public class FeedBackServiceImplementation implements FeedBackService{
     @Override
     @Transactional
     public FeedBackResponse saveFeedBack(FeedBackRequest feedBackRequest, Authentication connectedUser) {
-        System.out.println("feedBackRequest.bookId() " + feedBackRequest.bookId());
+
         Book book = bookRepository
                 .findById(feedBackRequest.bookId())
                 .orElseThrow(() -> new NotFoundEntityException("Book not found!"));
@@ -45,10 +45,16 @@ public class FeedBackServiceImplementation implements FeedBackService{
             throw new OperationNotPermittedException("You cannot give a feed for an archived or not shareable book");
         }
 
-        Account account = (Account) connectedUser.getPrincipal();
-        UUID accountId = account.getId();
+//        Account account = (Account) connectedUser.getPrincipal();
+//        UUID accountId = account.getId();
+//
+//        if (Objects.equals(book.getOwner().getId(), accountId)) {
+//            throw new OperationNotPermittedException("You cannot give a feedback to your own book");
+//        }
 
-        if (Objects.equals(book.getOwner().getId(), accountId)) {
+        UUID accountId = UUID.fromString(connectedUser.getName());
+
+        if (Objects.equals(book.getCreatedBy(), accountId)) {
             throw new OperationNotPermittedException("You cannot give a feedback to your own book");
         }
 
@@ -68,8 +74,11 @@ public class FeedBackServiceImplementation implements FeedBackService{
     ) {
         uriComponentsBuilder.path("/feedbacks");
 
-        Account account = (Account) connectedUser.getPrincipal();
-        UUID accountId = account.getId();
+//        Account account = (Account) connectedUser.getPrincipal();
+//        UUID accountId = account.getId();
+
+        UUID accountId = UUID.fromString(connectedUser.getName());
+
         Pageable pageable = PageableUtils.setPageable(number, size, Constants.CREATED_AT);
         Page<Feedback> feedbackPage = feedBackRepository.findAllFeedBackByBookId(bookId, pageable);
 

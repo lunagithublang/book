@@ -34,9 +34,10 @@ public class BookMapper2 {
                 .isShareable(book.isShareable())
                 .createdBy(book.getCreatedBy())
                 .createdAt(book.getCreatedAt())
-                .updatedBy(book.getUpdatedBy())
+                .updatedBy(book.getLastModifiedBy())
                 .updatedAt(book.getUpdatedAt())
-                .owner(book.getOwner().getFullName())
+//                .owner(book.getOwner().getFullName())
+                .owner(book.getCreatedBy())
                 .rate(book.getRate())
                 .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();

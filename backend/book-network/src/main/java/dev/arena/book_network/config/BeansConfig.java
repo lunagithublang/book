@@ -10,11 +10,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.util.UriComponentsBuilder;
 
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,8 +55,4 @@ public class BeansConfig {
         return new ApplicationAuditAware();
     }
 
-    @Bean
-    public UriComponentsBuilder uriComponentsBuilder() {
-        return UriComponentsBuilder.newInstance();
-    }
 }

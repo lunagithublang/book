@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Entity
+//@Entity
 public class Account extends BaseEntity implements UserDetails, Principal {
 
     private String firstName;

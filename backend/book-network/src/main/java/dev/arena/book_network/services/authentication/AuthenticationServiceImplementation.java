@@ -21,7 +21,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+// Commented this out since I added keycloak
+//@Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImplementation implements AuthenticationService{
 
@@ -53,35 +54,35 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     @Override
 //    @Transactional
     public void activateAccount(String token) throws MessagingException {
-        Token savedToken = tokenRepository.findByToken(token)
-                .orElseThrow(() -> new InvalidTokenException("Invalid token"));
-
-        // Check if the token is expired and not yet validated
-        if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
-
-            if (savedToken.getAccount().isEnabled()) {
-                throw new RuntimeException("This Account is already activated");
-            }
-
-            if (savedToken.getValidatedAt() != null) {
-                throw new RuntimeException("This Account is already activated");
-            }
-
-            accountEmailService.sendValidationEmail(savedToken.getAccount());
-            throw new RuntimeException("Activation token has expired. New token has been sent");
-        }
-
-        // If the token is not expired but the account is already activated
-        if (savedToken.getAccount().isEnabled()) {
-            throw new RuntimeException("This Account is already activated");
-        }
-
-        Account account = savedToken.getAccount();
-        account.setEnabled(true);
-
-        accountRepository.save(account);
-
-        savedToken.setValidatedAt(LocalDateTime.now());
-        tokenRepository.save(savedToken);
+//        Token savedToken = tokenRepository.findByToken(token)
+//                .orElseThrow(() -> new InvalidTokenException("Invalid token"));
+//
+//        // Check if the token is expired and not yet validated
+//        if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
+//
+//            if (savedToken.getAccount().isEnabled()) {
+//                throw new RuntimeException("This Account is already activated");
+//            }
+//
+//            if (savedToken.getValidatedAt() != null) {
+//                throw new RuntimeException("This Account is already activated");
+//            }
+//
+//            accountEmailService.sendValidationEmail(savedToken.getAccount());
+//            throw new RuntimeException("Activation token has expired. New token has been sent");
+//        }
+//
+//        // If the token is not expired but the account is already activated
+//        if (savedToken.getAccount().isEnabled()) {
+//            throw new RuntimeException("This Account is already activated");
+//        }
+//
+//        Account account = savedToken.getAccount();
+//        account.setEnabled(true);
+//
+//        accountRepository.save(account);
+//
+//        savedToken.setValidatedAt(LocalDateTime.now());
+//        tokenRepository.save(savedToken);
     }
 }

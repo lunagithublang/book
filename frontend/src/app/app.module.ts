@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,12 @@ import { CodeInputModule } from 'angular-code-input';
 import { TokenService } from './services/token/token.service';
 import { tokenInterceptor } from './services/interceptor/token.interceptor';
 import { ApiModule } from './services/api.module';
+import { KeycloakService } from './services/keycloak/keycloak.service';
+
+
+export function keyCloakFactory(keycloakService: KeycloakService) {
+    return () => keycloakService.init()
+}
 
 @NgModule({
   declarations: [
@@ -35,7 +41,13 @@ import { ApiModule } from './services/api.module';
     provideHttpClient(
       withFetch(),
       withInterceptors([tokenInterceptor])
-    )
+    ),
+    {
+      provide: APP_INITIALIZER,
+      deps: [KeycloakService],
+      useFactory: keyCloakFactory,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
