@@ -45,18 +45,19 @@ public class BookServiceImplementation implements BookService {
     @Override
     @Transactional
     public BookResponse saveBook(BookRequest bookRequest, Authentication connectedUser) {
-        Account account = (Account) connectedUser.getPrincipal();
+//        Account account = (Account) connectedUser.getPrincipal();
         Book book = bookMapper2.toBook(bookRequest);
-        book.setOwner(account);
+//        book.setOwner(account);
 
         return bookMapper2.toResponse(bookRepository.save(book));
     }
 
     @Override
     public BookResponse findById(UUID resourceId, Authentication connectedUser) {
-        Account account = (Account) connectedUser.getPrincipal();
+//        Account account = (Account) connectedUser.getPrincipal();
+        UUID accountId = UUID.fromString(connectedUser.getName());
         Book book = bookRepository
-                .findByIdAndOwnerId(resourceId, account.getId())
+                .findByIdAndOwnerId(resourceId, accountId)
                 .orElseThrow(() -> new NotFoundEntityException("Book not found!"));
 
         return bookMapper2.toResponse(book);
@@ -65,9 +66,10 @@ public class BookServiceImplementation implements BookService {
     @Override
     @Transactional
     public BookResponse updateShareableStatusById(UUID resourceId, Authentication connectedUser) {
-        Account account = (Account) connectedUser.getPrincipal();
+//        Account account = (Account) connectedUser.getPrincipal();
+        UUID accountId = UUID.fromString(connectedUser.getName());
         Book book = bookRepository
-                .findByIdAndOwnerId(resourceId, account.getId())
+                .findByIdAndOwnerId(resourceId, accountId)
                 .orElseThrow(() -> new NotFoundEntityException("Book not found!"));
         book.setShareable(!book.isShareable());
 
@@ -77,9 +79,10 @@ public class BookServiceImplementation implements BookService {
     @Override
     @Transactional
     public BookResponse updateArchiveStatusById(UUID resourceId, Authentication connectedUser) {
-        Account account = (Account) connectedUser.getPrincipal();
+//        Account account = (Account) connectedUser.getPrincipal();
+        UUID accountId = UUID.fromString(connectedUser.getName());
         Book book = bookRepository
-                .findByIdAndOwnerId(resourceId, account.getId())
+                .findByIdAndOwnerId(resourceId, accountId)
                 .orElseThrow(() -> new NotFoundEntityException("Book not found!"));
         book.setArchived(!book.isArchived());
 
@@ -98,10 +101,15 @@ public class BookServiceImplementation implements BookService {
             throw new OperationNotPermittedException("This book cannot be borrowed since it is archived or not shareable");
         }
 
-        Account account = (Account) connectedUser.getPrincipal();
-        UUID accountId = account.getId();
+//        Account account = (Account) connectedUser.getPrincipal();
+//        UUID accountId = account.getId();
+        UUID accountId = UUID.fromString(connectedUser.getName());
 
-        if (Objects.equals(book.getOwner().getId(), accountId)) {
+//        if (Objects.equals(book.getOwner().getId(), accountId)) {
+//            throw new OperationNotPermittedException("You cannot borrow your own book");
+//        }
+
+        if (Objects.equals(book.getCreatedBy(), accountId)) {
             throw new OperationNotPermittedException("You cannot borrow your own book");
         }
 
@@ -111,7 +119,8 @@ public class BookServiceImplementation implements BookService {
         }
 
         BookTransactionHistory bookTransactionHistory = BookTransactionHistory.builder()
-                .account(account)
+//                .account(account)
+                .accountId(accountId)
                 .book(book)
                 .isReturned(false)
                 .isReturnedApproved(false)
@@ -134,10 +143,14 @@ public class BookServiceImplementation implements BookService {
             throw new OperationNotPermittedException("This book cannot be borrowed since it is archived or not shareable");
         }
 
-        Account account = (Account) connectedUser.getPrincipal();
-        UUID accountId = account.getId();
+//        Account account = (Account) connectedUser.getPrincipal();
+//        UUID accountId = account.getId();
+        UUID accountId = UUID.fromString(connectedUser.getName());
 
-        if (Objects.equals(book.getOwner().getId(), accountId)) {
+//        if (Objects.equals(book.getOwner().getId(), accountId)) {
+//            throw new OperationNotPermittedException("You cannot return your own book");
+//        }
+        if (Objects.equals(book.getCreatedBy(), accountId)) {
             throw new OperationNotPermittedException("You cannot return your own book");
         }
 
@@ -163,9 +176,9 @@ public class BookServiceImplementation implements BookService {
             throw new OperationNotPermittedException("This book cannot be borrowed since it is archived or not shareable");
         }
 
-        Account account = (Account) connectedUser.getPrincipal();
-        UUID accountId = account.getId();
-
+//        Account account = (Account) connectedUser.getPrincipal();
+//        UUID accountId = account.getId();
+          UUID accountId = UUID.fromString(connectedUser.getName());
 //        if (Objects.equals(book.getOwner().getId(), accountId)) {
 //            throw new OperationNotPermittedException("You cannot return your own book");
 //        }
@@ -191,8 +204,9 @@ public class BookServiceImplementation implements BookService {
             throw new OperationNotPermittedException("This book cannot upload book cover since it is archive or not shareable");
         }
 
-        Account account = (Account) connectedUser.getPrincipal();
-        UUID accountId = account.getId();
+//        Account account = (Account) connectedUser.getPrincipal();
+//        UUID accountId = account.getId();
+        UUID accountId = UUID.fromString(connectedUser.getName());
 
         String bookCover = fileService.saveFile(accountId, file);
         book.setBookCover(bookCover);
@@ -207,9 +221,10 @@ public class BookServiceImplementation implements BookService {
             UriComponentsBuilder uriComponentsBuilder
     ) {
         uriComponentsBuilder.path("/books");
-        Account account = (Account) connectedUser.getPrincipal();
+//        Account account = (Account) connectedUser.getPrincipal();
+        UUID accountId = UUID.fromString(connectedUser.getName());
         Pageable pageable = PageableUtils.setPageable(pageNumber, pageSize, Constants.CREATED_AT);
-        Page<Book> bookPage = bookRepository.findAllDisplayableBooks(account.getId(), pageable);
+        Page<Book> bookPage = bookRepository.findAllDisplayableBooks(accountId, pageable);
         return PaginationUtils.createPageResponse(
                 bookPage,
                 bookMapper2::toResponse,
@@ -225,9 +240,10 @@ public class BookServiceImplementation implements BookService {
             UriComponentsBuilder uriComponentsBuilder
     ) {
         uriComponentsBuilder.path("/books");
-        Account account = (Account) connectedUser.getPrincipal();
+//        Account account = (Account) connectedUser.getPrincipal();
+        UUID accountId = UUID.fromString(connectedUser.getName());
         Pageable pageable = PageableUtils.setPageable(pageNumber, pageSize, Constants.CREATED_AT);
-        Page<Book> bookPage = bookRepository.findAllByOwnerId(account.getId(), pageable);
+        Page<Book> bookPage = bookRepository.findAllBycreatedBy(accountId, pageable);
         return PaginationUtils.createPageResponse(
                 bookPage,
                 bookMapper2::toResponse,
@@ -243,9 +259,10 @@ public class BookServiceImplementation implements BookService {
             UriComponentsBuilder uriComponentsBuilder
     ) {
         uriComponentsBuilder.path("/books");
-        Account account = (Account) connectedUser.getPrincipal();
+//        Account account = (Account) connectedUser.getPrincipal();
+        UUID accountId = UUID.fromString(connectedUser.getName());
         Pageable pageable = PageableUtils.setPageable(pageNumber, pageSize, Constants.CREATED_AT);
-        Page<BookTransactionHistory> bookTransactionHistoryPage = bookTransactionHistoryRepository.findAllBorrowedBooks(account.getId(), pageable);
+        Page<BookTransactionHistory> bookTransactionHistoryPage = bookTransactionHistoryRepository.findAllBorrowedBooks(accountId, pageable);
         return PaginationUtils.createPageResponse(
                 bookTransactionHistoryPage,
                 bookHistoryTransactionMapper::toResponse,
@@ -261,9 +278,10 @@ public class BookServiceImplementation implements BookService {
             UriComponentsBuilder uriComponentsBuilder
     ) {
         uriComponentsBuilder.path("/books");
-        Account account = (Account) connectedUser.getPrincipal();
+//        Account account = (Account) connectedUser.getPrincipal();
+        UUID accountId = UUID.fromString(connectedUser.getName());
         Pageable pageable = PageableUtils.setPageable(pageNumber, pageSize, Constants.CREATED_AT);
-        Page<BookTransactionHistory> bookTransactionHistoryPage = bookTransactionHistoryRepository.findAllReturnedBooks(account.getId(), pageable);
+        Page<BookTransactionHistory> bookTransactionHistoryPage = bookTransactionHistoryRepository.findAllReturnedBooks(accountId, pageable);
         return PaginationUtils.createPageResponse(
                 bookTransactionHistoryPage,
                 bookHistoryTransactionMapper::toResponse,

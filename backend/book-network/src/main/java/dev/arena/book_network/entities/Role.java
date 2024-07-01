@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Entity
+//@Entity
 public class Role extends BaseEntity{
 
     @Column(unique = true, nullable = false)

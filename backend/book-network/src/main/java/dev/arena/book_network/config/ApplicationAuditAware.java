@@ -24,8 +24,11 @@ public class ApplicationAuditAware implements AuditorAware<UUID> {
             return Optional.empty();
         }
 
-        Account accountPrincipal = (Account) authentication.getPrincipal();
+//        Account accountPrincipal = (Account) authentication.getPrincipal();
+//
+//        return Optional.ofNullable(accountPrincipal.getId());
+        UUID accountId = UUID.fromString(authentication.getName());
 
-        return Optional.ofNullable(accountPrincipal.getId());
+        return Optional.of(accountId);
     }
 }

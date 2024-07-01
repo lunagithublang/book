@@ -17,30 +17,31 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class AuthenticateConfig {
 
-    private final AccountRepository accountRepository;
+//    private final AccountRepository accountRepository;
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return email -> accountRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Account not found!"));
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return email -> accountRepository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("Account not found!"));
+//    }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userDetailsService());
-
-        return authenticationProvider;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+    // Commented this out , since I implemented keycloak
+//    @Bean
+//    public AuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//        authenticationProvider.setUserDetailsService(userDetailsService());
+//
+//        return authenticationProvider;
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+//        return configuration.getAuthenticationManager();
+//    }
 }

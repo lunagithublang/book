@@ -40,10 +40,10 @@ public class Book extends BaseEntity {
     @Column(nullable = false, updatable = false)
     private UUID updatedBy;
 
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name ="owner_id")
-    private Account owner;
+//    @JsonManagedReference
+//    @ManyToOne
+//    @JoinColumn(name ="owner_id")
+//    private Account owner;
 
     @JsonBackReference
     @OneToMany(mappedBy = "book")

@@ -18,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+// Commented this out since I added keycloak
+//@Service
 @RequiredArgsConstructor
 public class AccountServiceImplementation implements AccountService{
 
@@ -33,21 +34,21 @@ public class AccountServiceImplementation implements AccountService{
     @Transactional
     public AuthenticateResponse saveAccount(AccountRequest accountRequest) throws MessagingException {
 
-        Role userRole = roleRepository.findByName("USER")
-                .orElseThrow(() -> new NotFoundEntityException("Role not found!"));
-
-        Account account = Account.builder()
-                .firstName(accountRequest.firstName())
-                .lastName(accountRequest.lastName())
-                .email(accountRequest.email())
-                .password(passwordEncoder.encode(accountRequest.password()))
-                .isAccountLocked(false)
-                .isEnabled(false)
-                .roles(List.of(userRole))
-                .build();
-
-        accountRepository.save(account);
-        accountEmailService.sendValidationEmail(account);
+//        Role userRole = roleRepository.findByName("USER")
+//                .orElseThrow(() -> new NotFoundEntityException("Role not found!"));
+//
+//        Account account = Account.builder()
+//                .firstName(accountRequest.firstName())
+//                .lastName(accountRequest.lastName())
+//                .email(accountRequest.email())
+//                .password(passwordEncoder.encode(accountRequest.password()))
+//                .isAccountLocked(false)
+//                .isEnabled(false)
+//                .roles(List.of(userRole))
+//                .build();
+//
+//        accountRepository.save(account);
+//        accountEmailService.sendValidationEmail(account);
 
         return null;
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenService } from '../../../../services/token/token.service';
+import { KeycloakService } from '../../../../services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,8 +11,10 @@ export class MenuComponent implements OnInit {
 
   fullName : string = '';
 
-  constructor(private tokenService: TokenService) {
-
+  constructor(
+    private tokenService: TokenService,
+    private keyCloakService: KeycloakService
+  ) {
   }
 
   ngOnInit(): void {
@@ -32,8 +35,18 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  logout() {
-    localStorage.clear()
-    window.location.reload();
+  // JWT logout
+  // logout() {
+  //   localStorage.clear()
+  //   window.location.reload();
+  // }
+
+  async settings() {
+    await this.keyCloakService.settings();
   }
+
+  async logout() {
+    await this.keyCloakService.logout();
+  }
+
 }
