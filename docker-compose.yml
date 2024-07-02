@@ -24,7 +24,7 @@ services:
 
   book-api:
     container_name: book-backend
-    image: book/backend:1.0.1
+    image: book/backend:1.0.3
     ports:
       - 8088:8088
     networks:
